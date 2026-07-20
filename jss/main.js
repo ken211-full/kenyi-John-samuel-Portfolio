@@ -132,20 +132,67 @@ revealElements.forEach(element => {
    CONTACT FORM
 ========================================== */
 
-const contactForm = document.getElementById("contactForm");
+/* ==========================================
+   CONTACT FORM - EMAILJS
+========================================== */
 
+const contactForm = document.getElementById("contactForm");
 const formMessage = document.getElementById("formMessage");
 
-contactForm.addEventListener("submit", function(event){
+/* Initialize EmailJS */
+
+emailjs.init({
+    publicKey: "qPTHD_crvYjEiLsqs"
+});
+
+
+/* Handle Contact Form Submission */
+
+contactForm.addEventListener("submit", function(event) {
 
     event.preventDefault();
 
-    formMessage.className = "form-message success";
+    /* Show sending message */
 
-    formMessage.textContent =
-        "Thank you! Your message has been received. I'll get back to you soon.";
+    formMessage.className = "form-message";
+    formMessage.textContent = "Sending your message...";
 
-    contactForm.reset();
+
+    /* Send Form */
+
+    emailjs.sendForm(
+        "service_r7f652q",
+        "template_0npxzkd",
+        contactForm
+    )
+
+    .then(function() {
+
+        /* Success */
+
+        formMessage.className = "form-message success";
+
+        formMessage.textContent =
+            "Thank you! Your message has been sent successfully. I'll get back to you soon.";
+
+        /* Clear Form */
+
+        contactForm.reset();
+
+    })
+
+    .catch(function(error) {
+
+        /* Error */
+
+        console.error("EmailJS Error:", error);
+
+        formMessage.className = "form-message error";
+
+        formMessage.textContent =
+            "Sorry, something went wrong. Please try again later.";
+
+    });
 
 });
 
