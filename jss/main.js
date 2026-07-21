@@ -39,7 +39,8 @@ const professions = [
     "Web Developer",
     "Python Programmer",
     "Database Administrator",
-    "Graphic Designer"
+    "Graphic Designer",
+    "Data Scientist"
 ];
 
 let professionIndex = 0;
